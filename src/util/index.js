@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const mapAlbumToModel = ({
   album_id,
   name,
