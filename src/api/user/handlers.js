@@ -33,7 +33,7 @@ class UserHandlers {
 
       return h.response({
         status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
+        message: error.message,
       }).code(500);
     }
   }
@@ -59,7 +59,7 @@ class UserHandlers {
       }
       return h.response({
         status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
+        message: error.message,
       }).code(500);
     }
   }

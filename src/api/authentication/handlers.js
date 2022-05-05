@@ -42,7 +42,7 @@ class AuthenticationHandler {
 
       return h.response({
         status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
+        message: error.message,
       }).code(500);
     }
   }
@@ -73,7 +73,7 @@ class AuthenticationHandler {
 
       return h.response({
         status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
+        message: error.message,
       }).code(500);
     }
   }
@@ -100,7 +100,7 @@ class AuthenticationHandler {
 
       return h.response({
         status: 'error',
-        message: 'Maaf, terjadi kegagalan pada server kami.',
+        message: error.message,
       }).code(500);
     }
   }

@@ -33,8 +33,8 @@ class AlbumHandler {
         }).code(error.statusCode);
       }
       return h.response({
-        status: 'fail',
-        message: `test${error.message}`,
+        status: 'error',
+        message: error.message,
       }).code(500);
     }
   }
@@ -60,7 +60,7 @@ class AlbumHandler {
         }).code(error.statusCode);
       }
       return h.response({
-        status: 'fail',
+        status: 'error',
         message: error.message,
       }).code(500);
     }
@@ -86,7 +86,7 @@ class AlbumHandler {
         }).code(error.statusCode);
       }
       return h.response({
-        status: 'fail',
+        status: 'error',
         message: error.message,
       }).code(500);
     }
@@ -109,7 +109,7 @@ class AlbumHandler {
         }).code(error.statusCode);
       }
       return h.response({
-        status: 'fail',
+        status: 'error',
         message: error.message,
       }).code(500);
     }
