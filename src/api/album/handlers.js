@@ -14,9 +14,9 @@ class AlbumHandler {
   async postAlbumHandler(request, h) {
     try {
       this.validator.validateAlbumPayload(request.payload);
-      const { name, year } = request.payload;
+      const { name, year, cover } = request.payload;
 
-      const albumId = await this.service.addAlbum({ name, year });
+      const albumId = await this.service.addAlbum({ name, year, cover });
 
       return h.response({
         status: 'success',
@@ -43,12 +43,16 @@ class AlbumHandler {
     try {
       const { id } = request.params;
       const album = await this.service.getAlbumById(id);
+      if (album.cover === undefined) {
+        album.cover = null;
+      }
       return {
         status: 'success',
         message: 'album ditemukan',
         data: {
           album: {
             ...album,
+            coverUrl: album.cover,
           },
         },
       };
@@ -70,9 +74,9 @@ class AlbumHandler {
     try {
       this.validator.validateAlbumPayload(request.payload);
       const { id } = request.params;
-      const { name, year } = request.payload;
+      const { name, year, cover } = request.payload;
 
-      await this.service.editAlbumById(id, { name, year });
+      await this.service.editAlbumById(id, { name, year, cover });
 
       return {
         status: 'success',

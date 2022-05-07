@@ -6,8 +6,9 @@ const NotFoundError = require('../../exceptions/NotFoundError');
 const AuthenticationError = require('../../exceptions/AuthenticationError');
 
 class UserService {
-  constructor() {
+  constructor(cacheService) {
     this.pool = new Pool();
+    this.cacheService = cacheService;
   }
 
   async verifyNewUsername(username) {
@@ -60,22 +61,31 @@ class UserService {
     if (!result.rows.length) {
       throw new InvariantError('User gagal ditambahkan');
     }
+
+    await this.cacheService.delete(`userById:${id}`);
     return result.rows[0].id;
   }
 
   async getUserById(id) {
-    const query = {
-      text: 'SELECT id, username, fullname FROM users WHERE id = $1',
-      values: [id],
-    };
+    try {
+      const result = await this.cacheService.get(`userById:${id}`);
+      return JSON.parse(result);
+    } catch (error) {
+      const query = {
+        text: 'SELECT id, username, fullname FROM users WHERE id = $1',
+        values: [id],
+      };
 
-    const result = await this.pool.query(query);
+      const result = await this.pool.query(query);
 
-    if (!result.rows.length) {
-      throw new NotFoundError('User tidak ditemukan');
+      if (!result.rows.length) {
+        throw new NotFoundError('User tidak ditemukan');
+      }
+
+      await this.cacheService.set(`userById:${id}`, JSON.stringify(result.rows[0]));
+
+      return result.rows[0];
     }
-
-    return result.rows[0];
   }
 }
 

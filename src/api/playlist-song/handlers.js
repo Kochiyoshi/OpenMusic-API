@@ -7,7 +7,7 @@ class PlaylistSongHandler {
       playlistService,
       songService,
     } = service;
-    this.service = playlistSongService;
+    this.playlistSongService = playlistSongService;
     this.playlistService = playlistService;
     this.songService = songService;
     this.validator = validator;
@@ -28,7 +28,7 @@ class PlaylistSongHandler {
       await this.playlistService.verifyPlaylistOwner(playlistId, owner);
       await this.songService.getSongById(songId);
 
-      const songIdResult = await this.service.addPlaylistSong(playlistId, songId);
+      const songIdResult = await this.playlistSongService.addPlaylistSong(playlistId, songId);
       return h.response({
         status: 'success',
         message: 'Lagu berhasil ditambahkan ke Playlist',
@@ -56,7 +56,7 @@ class PlaylistSongHandler {
       const { id: owner } = request.auth.credentials;
       await this.playlistService.verifyPlaylistOwner(playlistId, owner);
       const playlistDetails = await this.playlistService.getPlaylistById(playlistId);
-      const playlistSongs = await this.service.getPlaylistSongs(playlistId);
+      const playlistSongs = await this.playlistSongService.getPlaylistSongs(playlistId);
 
       return {
         status: 'success',
@@ -94,7 +94,7 @@ class PlaylistSongHandler {
       const { id: owner } = request.auth.credentials;
 
       await this.playlistService.verifyPlaylistOwner(playlistId, owner);
-      await this.service.deleteSongFromPlaylist(playlistId, songId);
+      await this.playlistSongService.deleteSongFromPlaylist(playlistId, songId);
 
       return {
         status: 'success',

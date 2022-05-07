@@ -10,6 +10,7 @@ const AlbumPayloadSchema = Joi.object({
     .messages({
       'any.required': 'Gagal menambahkan album. Mohon isi tahun album',
     }),
+  cover: Joi.string(),
 });
 
 module.exports = { AlbumPayloadSchema };
